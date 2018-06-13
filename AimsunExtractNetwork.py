@@ -102,6 +102,13 @@ def ExtractJunctionInformation(model,outputLocation):
                     string = string + str(turnInfSection[k].getId()) + ','
                 string = string + str(turnInfSection[len(turnInfSection) - 1].getId()) + '\n'
                 junctionInfFile.write(string)
+
+            #Write position of junction
+            translator=GKCoordinateTranslator(model)
+            coords = translator.toDegrees(junctionObj.getPosition())
+            junctionInfFile.write("Coordinates:\n")
+            junctionInfFile.write(("%.6f,%.6f\n") % (coords.x, coords.y))
+
             junctionInfFile.write("\n")
     return 0
 
@@ -279,6 +286,11 @@ def ExtractSectionInformation(model,outputLocation):
                 sectionInfFile.write(("%.6f,%.6f,") % (point.x,point.y))
             point = translator.toDegrees(points[totPoint-1])
             sectionInfFile.write(("%.6f,%.6f\n") % (point.x, point.y))
+
+            #Write the speed
+            sectionInfFile.write("Speed:\n")
+            speed = sectionObj.getSpeed()
+            sectionInfFile.write(("%i\n") % speed)
 
             sectionInfFile.write("\n")
     return 0
