@@ -106,8 +106,11 @@ def ExtractJunctionInformation(model,outputLocation):
             #Write position of junction
             translator=GKCoordinateTranslator(model)
             coords = translator.toDegrees(junctionObj.getPosition())
-            junctionInfFile.write("Coordinates:\n")
-            junctionInfFile.write(("%.6f,%.6f\n") % (coords.x, coords.y))
+            # junctionInfFile.write("Coordinates:\n")
+            # junctionInfFile.write(("%.6f,%.6f\n") % (coords.x, coords.y))
+            polygon = junctionObj.getPolygon()
+            translated = translator.toDegrees(polygon[0])
+            junctionInfFile.write(("%.6f,%.6f\n") % (translated.x, translated.y))
 
             junctionInfFile.write("\n")
     return 0
